@@ -9,6 +9,10 @@ class Stats
     this.attack = 0;
     this.defense = 0;
   }
+
+  toString() {
+    return "{ Stats (Unimplemented) }";
+  }
 };
 
 class PlayerStats extends Stats
@@ -16,6 +20,10 @@ class PlayerStats extends Stats
   constructor() {
     super();
     this.xp = 0;
+  }
+
+  toString() {
+    return JSON.stringify(this, null, 2);
   }
 };
 

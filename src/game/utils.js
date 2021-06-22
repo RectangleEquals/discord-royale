@@ -1,3 +1,6 @@
+const drawText = require('node-canvas-text').default;
+const opentype = require('opentype.js');
+
 class RenderUtils
 {
   constructor() { }
@@ -9,6 +12,23 @@ class RenderUtils
  
     // Return the radius
     return Math.sqrt(Math.pow(rect.width, 2) + Math.pow(rect.height, 2)) / 2;
+  }
+
+  static loadFont(url) {
+    return opentype.loadSync(url);
+  }
+
+  static drawText(context, text, font, rect, options)
+  {
+    options = options || {};
+    options.textPadding = options.textPadding || -5;
+    options.minSize = options.minSize || 5;
+    options.maxSize = options.maxSize || 100;
+    options.vAlign = options.vAlign || 'center';
+    options.hAlign = options.hAlign || 'center';
+    options.fitMethod = options.fitMethod || 'baseline';
+    options.textFillStyle = options.textFillStyle || 'rgba(255,255,255,0.8)';
+    drawText(context, text, font, rect, options);
   }
 
   static roundRect(context, x, y, width, height, radius)
@@ -45,6 +65,43 @@ class RenderUtils
     context.lineTo(x, y + radius.tl);
     context.quadraticCurveTo(x, y, x + radius.tl, y);
     context.closePath();
+  }
+
+  static drawProgressBar(context, rect, min, max, value, options)
+  {
+    options = options || {};
+    context.save();
+
+    // Draw background
+    context.fillStyle = options.fillStyleBackground || 'rgba(32, 32, 32, 0.05)';
+    context.fillRect(rect.x, rect.y, rect.width, rect.height);
+    
+    // Draw progress
+    let progress = (value - min) / (max - min);
+    let progressRect = {
+      x: rect.x, y: rect.y,
+      width: rect.width * progress,
+      height: rect.height
+    }
+    context.fillStyle = options.fillStyle || 'rgba(255, 0, 0, 0.6)';
+    context.fillRect(progressRect.x, progressRect.y, progressRect.width, progressRect.height);
+
+    // Draw outline
+    context.fillStyle = options.strokeStyle || 'rgba(64, 0, 0, 0.8)';
+    context.rect(rect.x, rect.y, rect.width, rect.height);
+    //context.stroke();
+
+    // Draw text
+    if(options.font)
+    {
+      RenderUtils.drawText(
+        context,
+        Math.round(value - min) + "/" + Math.round(max - min) + " (" + Math.round(progress * 100) + "%)",
+        options.font, rect, options.textOptions
+      );
+    }
+
+    context.restore();
   }
   
   static drawGrid(context)

@@ -12,6 +12,10 @@ class Player extends Entity
     this.location = new Vector2();
     this.inventory = new PlayerInventory();
   }
+  
+  toString() {
+    return JSON.stringify(this, null, 2);
+  }
 };
 
 module.exports = { Player };
