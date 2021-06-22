@@ -48,7 +48,7 @@ _rects.Attributes.Inner = {
   height: _rects.Attributes.height - 30
 };
 
-_rects.Stats.Inner.Rows = [{},{},{},{},{},{},{},{},{},{}];
+_rects.Stats.Inner.Rows = [{},{},{},{},{},{},{},{}];
 let innerRowHeight = _rects.Stats.Inner.height / _rects.Stats.Inner.Rows.length;
 for (let row = 0; row < _rects.Stats.Inner.Rows.length; row++)
 {
@@ -70,63 +70,76 @@ _rects.Stats.Inner.Rows[0].Icon = {
 _rects.Stats.Inner.Rows[0].Label = {
   x: _rects.Stats.Inner.Rows[0].Icon.x + _rects.Stats.Inner.Rows[0].Icon.width,
   y: _rects.Stats.Inner.Rows[0].Icon.y,
-  width: (_rects.Stats.Inner.Rows[0].width - _rects.Stats.Inner.Rows[0].Icon.width) / 2,
-  height: _rects.Stats.Inner.Rows[0].height
-};
-_rects.Stats.Inner.Rows[0].Data = {
-  x: _rects.Stats.Inner.Rows[0].Label.x + _rects.Stats.Inner.Rows[0].Label.width,
-  y: _rects.Stats.Inner.Rows[0].Label.y,
-  width: (_rects.Stats.Inner.Rows[0].width - _rects.Stats.Inner.Rows[0].Icon.width) / 2,
+  width: _rects.Stats.Inner.Rows[0].width - _rects.Stats.Inner.Rows[0].Icon.width,
   height: _rects.Stats.Inner.Rows[0].height
 };
 
 // Player HP
-_rects.Stats.Inner.Rows[1].Label = {
+_rects.Stats.Inner.Rows[1].Icon = {
   x: _rects.Stats.Inner.Rows[1].x,
   y: _rects.Stats.Inner.Rows[1].y,
-  width: _rects.Stats.Inner.Rows[1].width * 0.3,
+  width: _rects.Stats.Inner.Rows[1].height,
+  height: _rects.Stats.Inner.Rows[1].height
+};
+_rects.Stats.Inner.Rows[1].Label = {
+  x: _rects.Stats.Inner.Rows[1].Icon.x + _rects.Stats.Inner.Rows[1].Icon.width,
+  y: _rects.Stats.Inner.Rows[1].y,
+  width: (_rects.Stats.Inner.Rows[1].width * 0.4) - _rects.Stats.Inner.Rows[1].Icon.width,
   height: _rects.Stats.Inner.Rows[1].height
 };
 _rects.Stats.Inner.Rows[1].ProgressBar = {
-  x: _rects.Stats.Inner.Rows[1].Label.x + _rects.Stats.Inner.Rows[1].Label.width,
-  y: _rects.Stats.Inner.Rows[1].Label.y,
-  width: _rects.Stats.Inner.Rows[1].width * 0.7,
+  x: _rects.Stats.Inner.Rows[1].x + _rects.Stats.Inner.Rows[1].Icon.width + ((_rects.Stats.Inner.Rows[1].width * 0.4) - _rects.Stats.Inner.Rows[1].Icon.width),
+  y: _rects.Stats.Inner.Rows[1].y,
+  width: _rects.Stats.Inner.Rows[1].width * 0.6,
   height: _rects.Stats.Inner.Rows[1].height
 };
 
 // Player Stamina
-_rects.Stats.Inner.Rows[2].Label = {
+_rects.Stats.Inner.Rows[2].Icon = {
   x: _rects.Stats.Inner.Rows[2].x,
   y: _rects.Stats.Inner.Rows[2].y,
-  width: _rects.Stats.Inner.Rows[2].width * 0.3,
+  width: _rects.Stats.Inner.Rows[2].height,
+  height: _rects.Stats.Inner.Rows[2].height
+};
+_rects.Stats.Inner.Rows[2].Label = {
+  x: _rects.Stats.Inner.Rows[2].x + _rects.Stats.Inner.Rows[2].Icon.width,
+  y: _rects.Stats.Inner.Rows[2].y,
+  width: (_rects.Stats.Inner.Rows[2].width * 0.4) - _rects.Stats.Inner.Rows[2].Icon.width,
   height: _rects.Stats.Inner.Rows[2].height
 };
 _rects.Stats.Inner.Rows[2].ProgressBar = {
-  x: _rects.Stats.Inner.Rows[2].Label.x + _rects.Stats.Inner.Rows[2].Label.width,
-  y: _rects.Stats.Inner.Rows[2].Label.y,
-  width: _rects.Stats.Inner.Rows[2].width * 0.7,
+  x: _rects.Stats.Inner.Rows[2].x + _rects.Stats.Inner.Rows[2].Icon.width + ((_rects.Stats.Inner.Rows[2].width * 0.4) - _rects.Stats.Inner.Rows[2].Icon.width),
+  y: _rects.Stats.Inner.Rows[2].y,
+  width: _rects.Stats.Inner.Rows[2].width * 0.6,
   height: _rects.Stats.Inner.Rows[2].height
 };
 
 // Player XP
-_rects.Stats.Inner.Rows[3].Label = {
+_rects.Stats.Inner.Rows[3].Icon = {
   x: _rects.Stats.Inner.Rows[3].x,
   y: _rects.Stats.Inner.Rows[3].y,
-  width: _rects.Stats.Inner.Rows[3].width * 0.3,
+  width: _rects.Stats.Inner.Rows[3].height,
+  height: _rects.Stats.Inner.Rows[3].height
+};
+_rects.Stats.Inner.Rows[3].Label = {
+  x: _rects.Stats.Inner.Rows[3].x + _rects.Stats.Inner.Rows[3].Icon.width,
+  y: _rects.Stats.Inner.Rows[3].y,
+  width: (_rects.Stats.Inner.Rows[3].width * 0.4) - _rects.Stats.Inner.Rows[3].Icon.width,
   height: _rects.Stats.Inner.Rows[3].height
 };
 _rects.Stats.Inner.Rows[3].ProgressBar = {
-  x: _rects.Stats.Inner.Rows[3].Label.x + _rects.Stats.Inner.Rows[3].Label.width,
-  y: _rects.Stats.Inner.Rows[3].Label.y,
-  width: _rects.Stats.Inner.Rows[3].width * 0.7,
+  x: _rects.Stats.Inner.Rows[3].x + _rects.Stats.Inner.Rows[3].Icon.width + ((_rects.Stats.Inner.Rows[3].width * 0.4) - _rects.Stats.Inner.Rows[3].Icon.width),
+  y: _rects.Stats.Inner.Rows[3].y,
+  width: _rects.Stats.Inner.Rows[3].width * 0.6,
   height: _rects.Stats.Inner.Rows[3].height
 };
 
 // Profile class
 class Profile
 {
-  constructor(member, player, background)
+  constructor(context, member, player, background)
   {
+    this.context = context;
     this.rects = Object.freeze(_rects);
     this.member = member;
     this.player = player || new Player();
@@ -135,9 +148,18 @@ class Profile
     //this.background = background || 'https://i.pinimg.com/736x/51/f7/2b/51f72b3d501c8497646cc8577d640218.jpg'
     this.background = background || __dirname + "/../../../images/profile-bg.jpg";
 
+    this.icons = [];
+    this.loadIcons(context);
     this.fonts = [];
     this.loadFonts();
   }
+    
+    async loadIcons(context) {
+      this.icons.push(await Canvas.loadImage(__dirname + '/../../../images/level.png'));
+      this.icons.push(await Canvas.loadImage(__dirname + '/../../../images/health.png'));
+      this.icons.push(await Canvas.loadImage(__dirname + '/../../../images/stamina.png'));
+      this.icons.push(await Canvas.loadImage(__dirname + '/../../../images/xp.png'));
+    }
 
   loadFonts() {
     this.fonts.push(RenderUtils.loadFont(__dirname + '/../../../fonts/AncientModernTales-a7Po.ttf'));
@@ -305,30 +327,47 @@ class Profile
 
     let leftAlign = {
       hAlign: 'left',
-      textPadding: -5
+      textPadding: -5,
+      // drawRect: true
     }
     let rightAlign = {
       hAlign: 'right',
-      textPadding: -5
+      textPadding: -5,
+      // drawRect: true
     }
     // Level
-    RenderUtils.drawText(context, "Level", this.fonts[1], this.rects.Stats.Inner.Rows[0].Label, rightAlign);
-    RenderUtils.drawText(context, this.player.attributes.level.toString(), this.fonts[1], this.rects.Stats.Inner.Rows[0].Data, leftAlign);
+    context.drawImage(this.icons[0],
+      this.rects.Stats.Inner.Rows[0].Icon.x, this.rects.Stats.Inner.Rows[0].Icon.y,
+      this.rects.Stats.Inner.Rows[0].Icon.width, this.rects.Stats.Inner.Rows[0].Icon.height
+    );
+    RenderUtils.drawText(context, "Level " + this.player.attributes.level.toString(), this.fonts[1], this.rects.Stats.Inner.Rows[0].Label);
     // HP
-    RenderUtils.drawText(context, "Health", this.fonts[1], this.rects.Stats.Inner.Rows[1].Label, leftAlign);
+    context.drawImage(this.icons[1],
+      this.rects.Stats.Inner.Rows[1].Icon.x, this.rects.Stats.Inner.Rows[1].Icon.y,
+      this.rects.Stats.Inner.Rows[1].Icon.width, this.rects.Stats.Inner.Rows[1].Icon.height
+    );
+    RenderUtils.drawText(context, "HP", this.fonts[1], this.rects.Stats.Inner.Rows[1].Label, leftAlign);
     RenderUtils.drawProgressBar(
       context, this.rects.Stats.Inner.Rows[1].ProgressBar,
       0, this.player.attributes.max_hp, this.player.attributes.stats.hp,
       { font: this.fonts[1], fillStyle: 'rgba(255, 0, 0, 0.6)' }
     );
     // Stamina
-    RenderUtils.drawText(context, "Stamina", this.fonts[1], this.rects.Stats.Inner.Rows[2].Label, leftAlign);
+    context.drawImage(this.icons[2],
+      this.rects.Stats.Inner.Rows[2].Icon.x, this.rects.Stats.Inner.Rows[2].Icon.y,
+      this.rects.Stats.Inner.Rows[2].Icon.width, this.rects.Stats.Inner.Rows[2].Icon.height
+    );
+    RenderUtils.drawText(context, "STA", this.fonts[1], this.rects.Stats.Inner.Rows[2].Label, leftAlign);
     RenderUtils.drawProgressBar(
       context, this.rects.Stats.Inner.Rows[2].ProgressBar,
       0, this.player.attributes.max_stamina, this.player.attributes.stats.stamina,
       { font: this.fonts[1], fillStyle: 'rgba(255, 255, 0, 0.6)' }
     );
     // XP
+    context.drawImage(this.icons[3],
+      this.rects.Stats.Inner.Rows[3].Icon.x, this.rects.Stats.Inner.Rows[3].Icon.y,
+      this.rects.Stats.Inner.Rows[3].Icon.width, this.rects.Stats.Inner.Rows[3].Icon.height
+    );
     RenderUtils.drawText(context, "XP", this.fonts[1], this.rects.Stats.Inner.Rows[3].Label, leftAlign);
     RenderUtils.drawProgressBar(
       context, this.rects.Stats.Inner.Rows[3].ProgressBar,
@@ -387,28 +426,28 @@ class Profile
     context.restore();
   }
 
-  async render(context)
+  async render()
   {
-    context.save();
+    this.context.save();
 
     // Draw the background
-    context.strokeRect(0, 0, this.rects.Canvas.width, this.rects.Canvas.height);
+    this.context.strokeRect(0, 0, this.rects.Canvas.width, this.rects.Canvas.height);
     const background = await Canvas.loadImage(this.background);
-    context.drawImage(background, 0, 0, this.rects.Canvas.width, this.rects.Canvas.height);
+    this.context.drawImage(background, 0, 0, this.rects.Canvas.width, this.rects.Canvas.height);
 
     // Draw grid
-    //RenderUtils.drawGrid(context);
+    //RenderUtils.drawGrid(this.context);
 
     // Draw the header
-    await this.renderHeader(context);
+    await this.renderHeader(this.context);
 
     // Draw player stats
-    await this.renderStats(context);
+    await this.renderStats(this.context);
 
     // Draw player attributes
-    await this.renderAttributes(context);
+    await this.renderAttributes(this.context);
 
-    context.restore();
+    this.context.restore();
   }
 };
 

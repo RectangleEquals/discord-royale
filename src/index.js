@@ -175,10 +175,10 @@ function updatePlayer(player)
 
 async function showProfile(player, member, channel)
 {
-  let profile = new Profile(member, player);
-	const canvas = Canvas.createCanvas(profile.rects.Canvas.width, profile.rects.Canvas.height);
+  const canvas = Canvas.createCanvas(config("PROFILE_CANVAS_WIDTH"), config("PROFILE_CANVAS_HEIGHT"));
 	const context = canvas.getContext('2d');
-  await profile.render(context);
+  let profile = new Profile(context, member, player);
+  await profile.render();
 
   // attach and send
   const filename = 'profile-' + member.id + '.png';
