@@ -1,6 +1,6 @@
-const { Attributes } = require("./attributes");
+import { Attributes } from "./attributes.js";
 
-const ItemType = Object.freeze({
+export const ItemType = Object.freeze({
   Undefined:  Symbol("undefined"),
   Quest:      Symbol("quest"),
   Currency:   Symbol("currency"),
@@ -8,14 +8,14 @@ const ItemType = Object.freeze({
   Equipment:  Symbol("equipment")
 });
 
-const ItemRarity = Object.freeze({
+export const ItemRarity = Object.freeze({
   Common:     Symbol("common"),
   Rare:       Symbol("rare"),
   Epic:       Symbol("epic"),
   Legendary:  Symbol("legendary")
 });
 
-class Item
+export class Item
 {
   constructor(type, name, iconUri)
   {
@@ -25,7 +25,7 @@ class Item
   }
 };
 
-class QuestItem extends Item
+export class QuestItem extends Item
 {
   constructor(name, iconUri)
   {
@@ -33,7 +33,7 @@ class QuestItem extends Item
   }
 }
 
-class DroppableItem extends Item
+export class DroppableItem extends Item
 {
   constructor(type, name, iconUri, weight, onDrop)
   {
@@ -49,7 +49,7 @@ class DroppableItem extends Item
   }
 }
 
-class Currency extends DroppableItem
+export class Currency extends DroppableItem
 {
   constructor(name, iconUri, weight, value, onDrop)
   {
@@ -58,7 +58,7 @@ class Currency extends DroppableItem
   }
 };
 
-class Consumable extends DroppableItem
+export class Consumable extends DroppableItem
 {
   constructor(name, iconUri, weight, value, onDrop, onUse)
   {
@@ -74,7 +74,7 @@ class Consumable extends DroppableItem
   }
 };
 
-class Equipment extends DroppableItem
+export class Equipment extends DroppableItem
 {
   constructor(name, iconUri, weight, attributeRequirements, rarity, value, onDrop, onEquip, onUnequip)
   {
@@ -100,5 +100,3 @@ class Equipment extends DroppableItem
       this.onUnequip(this);
   }
 };
-
-module.exports = { QuestItem, Consumable, Currency, Equipment };

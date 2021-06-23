@@ -1,14 +1,14 @@
-const { config } = require('../../config');
-const { Player } = require('../entity/player');
-const { RenderUtils } = require('../utils');
-const Canvas = require('node-canvas');
+import { conf } from '../../conf.js';
+import { Player } from '../entity/player.js';
+import { RenderUtils } from '../utils.js';
+import Canvas from 'node-canvas';
 
 // Profile rects
 let _rects = {};
 _rects.Canvas = {
   x: 0, y: 0,
-  width:  config("PROFILE_CANVAS_WIDTH"),
-  height: config("PROFILE_CANVAS_HEIGHT")
+  width:  conf("PROFILE_CANVAS_WIDTH"),
+  height: conf("PROFILE_CANVAS_HEIGHT")
 };
 _rects.Header = {
   x: 15, y: 15,
@@ -135,7 +135,7 @@ _rects.Stats.Inner.Rows[3].ProgressBar = {
 };
 
 // Profile class
-class Profile
+export class Profile
 {
   constructor(context, member, player, background)
   {
@@ -143,10 +143,10 @@ class Profile
     this.rects = Object.freeze(_rects);
     this.member = member;
     this.player = player || new Player();
-    //this.background = background || __dirname + "/../../../images/bg.jpg";
+    //this.background = background || process.cwd() + "/images/bg.jpg";
     //this.background = background || 'https://cdn.akamai.steamstatic.com/steam/apps/799960/ss_741b909d39573968d3ef72ba2c11836bd8e24478.1920x1080.jpg?t=1618937889'
     //this.background = background || 'https://i.pinimg.com/736x/51/f7/2b/51f72b3d501c8497646cc8577d640218.jpg'
-    this.background = background || __dirname + "/../../../images/profile-bg.jpg";
+    this.background = background || process.cwd() + "/images/profile-bg.jpg";
 
     this.icons = [];
     this.loadIcons(context);
@@ -154,18 +154,18 @@ class Profile
     this.loadFonts();
   }
     
-    async loadIcons(context) {
-      this.icons.push(await Canvas.loadImage(__dirname + '/../../../images/level.png'));
-      this.icons.push(await Canvas.loadImage(__dirname + '/../../../images/health.png'));
-      this.icons.push(await Canvas.loadImage(__dirname + '/../../../images/stamina.png'));
-      this.icons.push(await Canvas.loadImage(__dirname + '/../../../images/xp.png'));
-    }
+  async loadIcons(context) {
+    this.icons.push(await Canvas.loadImage(process.cwd() + '/images/level.png'));
+    this.icons.push(await Canvas.loadImage(process.cwd() + '/images/health.png'));
+    this.icons.push(await Canvas.loadImage(process.cwd() + '/images/stamina.png'));
+    this.icons.push(await Canvas.loadImage(process.cwd() + '/images/xp.png'));
+  }
 
   loadFonts() {
-    this.fonts.push(RenderUtils.loadFont(__dirname + '/../../../fonts/AncientModernTales-a7Po.ttf'));
-    this.fonts.push(RenderUtils.loadFont(__dirname + '/../../../fonts/EightBitDragon-anqx.ttf'));
-    this.fonts.push(RenderUtils.loadFont(__dirname + '/../../../fonts/SuperLegendBoy-4w8Y.ttf'));
-    this.fonts.push(RenderUtils.loadFont(__dirname + '/../../../fonts/AGoblinAppears-o2aV.ttf'));
+    this.fonts.push(RenderUtils.loadFont(process.cwd() + '/fonts/AncientModernTales-a7Po.ttf'));
+    this.fonts.push(RenderUtils.loadFont(process.cwd() + '/fonts/EightBitDragon-anqx.ttf'));
+    this.fonts.push(RenderUtils.loadFont(process.cwd() + '/fonts/SuperLegendBoy-4w8Y.ttf'));
+    this.fonts.push(RenderUtils.loadFont(process.cwd() + '/fonts/AGoblinAppears-o2aV.ttf'));
   }
 
   setBackground(uri) {
@@ -450,5 +450,3 @@ class Profile
     this.context.restore();
   }
 };
-
-module.exports = { Profile };

@@ -1,6 +1,6 @@
-const { Vector2 } = require('./vector2');
+import { Vector2 } from './vector2.js';
 
-class Area
+export class Area
 {
   constructor(world, name, location, players, monsters) {
     this.name = name || "Unknown Place";
@@ -20,5 +20,3 @@ class Area
     });
   }
 };
-
-module.exports = { Area };

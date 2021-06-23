@@ -1,7 +1,7 @@
 // Taken from: https://raw.githubusercontent.com/mrdoob/three.js/master/src/math/Vector2.js
 //  as part of the three.js ("JavaScript 3D library") project
 
-class Vector2 {
+export class Vector2 {
 
 	constructor( x = 0, y = 0 ) {
 
@@ -476,5 +476,3 @@ class Vector2 {
 }
 
 Vector2.prototype.isVector2 = true;
-
-module.exports = { Vector2 };

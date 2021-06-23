@@ -1,14 +1,27 @@
-let app = require('./app');
-app.server.db = require('./db');
-const Discord = require('discord.js');
-app.bot = new Discord.Client();
-const Canvas = require('node-canvas');
-const { config } = require('./config');
-const { World } = require('./game/world');
-const { Player } = require('./game/entity/player');
-const { Profile } = require('./game/ui/profile');
+import { conf } from './conf.js';
+import WebSocketServer from "ws";
+import http from "http";
+import express from "express";
 
-let g_world = new World();
+let app = {};
+app.server = {
+  express: express(),
+  http: {},
+  ws: {}
+};
+
+app.server.express.use(express.static(process.cwd() + "/"));
+app.server.http = http.createServer(app.server.express);
+const port = conf("PORT");
+app.server.http.listen(port);
+console.log("http server listening on %d", port);
+
+app.server.ws = new WebSocketServer.Server({server: app.server.http});
+console.log("websocket server created");
+
+import Discord from 'discord.js';
+app.bot = new Discord.Client();
+import { Game } from './game/game.js';
 
 app.bot.on("guildCreate", (guild) => {
   console.log(`Joined new guild: ${guild.name}`);
@@ -24,25 +37,25 @@ app.bot.on("guildCreate", (guild) => {
 
 app.server.ws.on("connection", function(ws, req)
 {
-  console.log("websocket connection open")
+  console.log("websocket connection open");
 
   ws.send("OK", () => { });
   ws.on('message', async (message) => {
-    const channel = await app.bot.channels.fetch(config("CHANNEL_ID"));
+    const channel = await app.bot.channels.fetch(conf.get("CHANNEL_ID"));
     await channel.send(message);
   });
 
   ws.on("close", () => {
-    console.log("websocket connection close")
+    console.log("websocket connection close");
   });
 });
 
 app.bot.on('ready', () => {
   console.log(`Logged in as ${app.bot.user.tag}!`);
-  // app.bot.channels.fetch(config("CHANNEL_ID"))
+  // app.bot.channels.fetch(conf("CHANNEL_ID"))
   //   .then(channel => channel.send("profile"));
-  app.bot.channels.fetch(config("CHANNEL_ID"))
-    .then(channel => channel.send("get"));
+  app.bot.channels.fetch(conf("CHANNEL_ID"))
+    .then(channel => channel.send("bot join"));
 });
 
 async function purgeChannel(channel)
@@ -56,25 +69,37 @@ async function purgeChannel(channel)
 
 app.bot.on('message', message =>
 {
-  if(!(message.channel.id === config("CHANNEL_ID")))
+  // Ignore all messages from channels that haven't been whitelisted
+  if(!(message.channel.id === conf("CHANNEL_ID")))
     return;
 
   if(message.content === 'purge') {
     purgeChannel(message.channel);
   }
 
-  if (message.content === 'profile')
-  {
-    let player = findOrCreatePlayer(message.member);
-		showProfile(player, message.member, message.channel);
+  if(message.content === 'join') {
+    Game.get(app.bot).onPlayerJoin(message);
+  }
+
+  if(message.content === 'gamestate') {
+    message.channel.send(Game.get(app.bot).state.toString());
+  }
+
+  if (message.content === 'profile') {
+    Game.get(app.bot).onPlayerProfile(message);
 	}
 
-  if (message.content === 'self') {
-    message.channel.send("profile");
+  if (message.content.startsWith('bot ')) {
+    let parts = message.content.split(' ');
+    message.channel.send(parts[1]);
+  }
+
+  if(message.content === 'hunt') {
+    Game.get(app.bot).onPlayerHunt(message);
   }
 
   if(message.content === 'get') {
-    let player = findOrCreatePlayer(message.member);
+    let player = Game.get(app.bot).world.findOrCreatePlayer(message.member);
     message.channel.send(
       "Player info for `" + player.name + "`:\n`" + player.toString() + "`"
     );
@@ -83,7 +108,7 @@ app.bot.on('message', message =>
   if(message.content.startsWith('set '))
   {
     let parts = message.content.split(' ');
-    let player = findOrCreatePlayer(message.member);
+    let player = Game.get(app.bot).world.findOrCreatePlayer(message.member);
 
     switch(parts[1])
     {
@@ -122,75 +147,11 @@ app.bot.on('message', message =>
   }
 });
 
-function findOrCreatePlayer(member)
-{
-  let player = {};
-
-  // Check for existing player
-  g_world.players.forEach(p => {
-    if(p.id === member.user.id)
-      player = p;
-  });
-
-  // If player not found, create a new one
-  if(!player.id) {
-    player = new Player(member.user.id, member.displayName);
-    player.attributes.level = 1;
-    player.attributes.strength = 5;
-    player.attributes.dexterity = 3;
-    player.attributes.intelligence = 1;
-    player.attributes.max_hp = 100;
-    player.attributes.max_stamina = 5;
-    player.attributes.max_xp = 50;
-    player.attributes.stats.hp = 50;
-    player.attributes.stats.stamina = 5;
-    player.attributes.stats.xp = 20;
-    g_world.players.push(player);
-  }
-
-  return player;
-}
-
-function updatePlayer(player)
-{
-  try {
-    console.log("Updating player information for `" + player.id + "`...");
-    g_world.players.forEach(p => {
-      if(p.id === player.id) {
-        g_world.players[g_world.players.indexOf(p)] = player;
-        throw "Success!";
-      }
-    });
-    throw "Failure!";
-  } catch (error) {
-    if(error === "Success!") {
-      console.log(error);
-      return true;
-    } else {
-      console.error(error);
-      return false;
-    }
-  }
-}
-
-async function showProfile(player, member, channel)
-{
-  const canvas = Canvas.createCanvas(config("PROFILE_CANVAS_WIDTH"), config("PROFILE_CANVAS_HEIGHT"));
-	const context = canvas.getContext('2d');
-  let profile = new Profile(context, member, player);
-  await profile.render();
-
-  // attach and send
-  const filename = 'profile-' + member.id + '.png';
-  const attachment = new Discord.MessageAttachment(canvas.toBuffer(), filename);
-  channel.send(`Here's your profile, ${member}!`, attachment);
-}
-
 app.bot.on('guildMemberAdd', async member =>
 {
-  let channel = await app.bot.channels.fetch(config("CHANNEL_ID"));
+  let channel = await app.bot.channels.fetch(conf("CHANNEL_ID"));
 	if (!channel)
     return;
 });
 
-app.bot.login(config("BOT_TOKEN"));
+app.bot.login(conf("BOT_TOKEN"));

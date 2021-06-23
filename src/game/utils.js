@@ -1,7 +1,7 @@
-const drawText = require('node-canvas-text').default;
-const opentype = require('opentype.js');
+import drawText from 'node-canvas-text';
+import opentype from 'opentype.js';
 
-class RenderUtils
+export class RenderUtils
 {
   constructor() { }
 
@@ -28,7 +28,7 @@ class RenderUtils
     options.hAlign = options.hAlign || 'center';
     options.fitMethod = options.fitMethod || 'baseline';
     options.textFillStyle = options.textFillStyle || 'rgba(255,255,255,0.8)';
-    drawText(context, text, font, rect, options);
+    drawText.default(context, text, font, rect, options);
   }
 
   static roundRect(context, x, y, width, height, radius)
@@ -138,5 +138,3 @@ class RenderUtils
     context.restore();
   }
 };
-
-module.exports = { RenderUtils };

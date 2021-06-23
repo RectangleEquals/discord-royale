@@ -1,9 +1,9 @@
-const { Entity } = require('./entity');
-const { EntityAttributes } = require('./attributes');
-const { Vector2 } = require('../vector2');
-const { Inventory } = require('./inventory');
+import { Entity } from './entity.js';
+import { EntityAttributes } from './attributes.js';
+import { Vector2 } from '../vector2.js';
+import { Inventory } from './inventory.js';
 
-class Monster extends Entity
+export class Monster extends Entity
 {
   constructor(id, name, attributes)
   {
@@ -13,5 +13,3 @@ class Monster extends Entity
     this.inventory = new Inventory();
   }
 };
-
-module.exports = { Monster };

@@ -1,9 +1,9 @@
-const Entity = require('./entity').Entity;
-const { PlayerAttributes } = require('./attributes');
-const { Vector2 } = require('../vector2');
-const { PlayerInventory } = require('./inventory');
+import { Entity } from './entity.js';
+import { PlayerAttributes } from './attributes.js';
+import { Vector2 } from '../vector2.js';
+import { PlayerInventory } from './inventory.js';
 
-class Player extends Entity
+export class Player extends Entity
 {
   constructor(id, name, attributes)
   {
@@ -12,10 +12,8 @@ class Player extends Entity
     this.location = new Vector2();
     this.inventory = new PlayerInventory();
   }
-  
+
   toString() {
     return JSON.stringify(this, null, 2);
   }
 };
-
-module.exports = { Player };

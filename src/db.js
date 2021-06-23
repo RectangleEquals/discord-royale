@@ -1,9 +1,10 @@
-function addGuild() {
+export class db
+{
+  static addGuild() {
 
+  }
+
+  static removeGuild() {
+
+  }
 }
-
-function removeGuild() {
-
-}
-
-module.exports = { addGuild, removeGuild };

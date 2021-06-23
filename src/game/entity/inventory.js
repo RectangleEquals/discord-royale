@@ -1,6 +1,6 @@
-const { QuestItem, Consumable, Currency, Equipment } = require('./item');
+import { QuestItem, Consumable, Currency, Equipment } from './item.js';
 
-class Inventory
+export class Inventory
 {
   constructor()
   {
@@ -30,7 +30,7 @@ class Inventory
   }
 };
 
-class PlayerInventory extends Inventory
+export class PlayerInventory extends Inventory
 {
   constructor()
   {
@@ -38,5 +38,3 @@ class PlayerInventory extends Inventory
     this.questItems = [ new QuestItem() ];
   }
 };
-
-module.exports = { Inventory, PlayerInventory };

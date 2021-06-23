@@ -1,8 +1,8 @@
-const { Stats, PlayerStats } = require('./stats');
+import { Stats, PlayerStats } from './stats.js';
 
 // Attributes are static, pre-determined, or rarely changed variables
 
-class Attributes
+export class Attributes
 {
   constructor() {
     this.level = 0;
@@ -16,7 +16,7 @@ class Attributes
   }
 }
 
-class EntityAttributes extends Attributes
+export class EntityAttributes extends Attributes
 {
   constructor() {
     super();
@@ -30,7 +30,7 @@ class EntityAttributes extends Attributes
   }
 }
 
-class PlayerAttributes extends Attributes
+export class PlayerAttributes extends Attributes
 {
   constructor()
   {
@@ -45,5 +45,3 @@ class PlayerAttributes extends Attributes
     return JSON.stringify(this, null, 2);
   }
 };
-
-module.exports = { Attributes, EntityAttributes, PlayerAttributes };

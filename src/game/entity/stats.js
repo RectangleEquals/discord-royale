@@ -1,6 +1,6 @@
 // Stats are dynamic, temporal or runtime-calculated variables
 
-class Stats
+export class Stats
 {
   constructor()
   {
@@ -15,7 +15,7 @@ class Stats
   }
 };
 
-class PlayerStats extends Stats
+export class PlayerStats extends Stats
 {
   constructor() {
     super();
@@ -26,5 +26,3 @@ class PlayerStats extends Stats
     return JSON.stringify(this, null, 2);
   }
 };
-
-module.exports = { Stats, PlayerStats };
