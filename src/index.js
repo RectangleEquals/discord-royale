@@ -41,7 +41,7 @@ app.server.ws.on("connection", function(ws, req)
 
   ws.send("OK", () => { });
   ws.on('message', async (message) => {
-    const channel = await app.bot.channels.fetch(conf.get("CHANNEL_ID"));
+    const channel = await app.bot.channels.fetch(conf("CHANNEL_ID"));
     await channel.send(message);
   });
 
